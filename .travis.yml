@@ -11,10 +11,19 @@ jobs:
     - bash ./buildScripts/prepare_aws_acc.sh
     deploy:
     - provider: script
-      script: bash ./buildScripts/deploy.sh
-      skip_cleanup: true 
+      script: bash ./buildScripts/deploy.sh dev
       on:
         branch: development
+    - provider: script
+      script: bash ./buildScripts/upload_artifacts.sh
+      on:
+        all_branches: true
+        condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"
+    - provider: script
+      script: bash ./buildScripts/deploy.sh stg
+      on:
+        all_branches: true
+        condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"
 
 stages:
 - name: test

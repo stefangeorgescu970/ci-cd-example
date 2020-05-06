@@ -12,18 +12,18 @@ jobs:
     deploy:
     - provider: script
       script: bash ./buildScripts/deploy.sh dev
-      cleanup: false
+      skip_cleanup: true 
       on:
         branch: development
     - provider: script
       script: bash ./buildScripts/upload_artifacts.sh
-      cleanup: false
+      skip_cleanup: true 
       on:
         all_branches: true
         condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"
     - provider: script
       script: bash ./buildScripts/deploy.sh stg
-      cleanup: false
+      skip_cleanup: true 
       on:
         all_branches: true
         condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"

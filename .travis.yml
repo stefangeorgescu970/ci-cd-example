@@ -1,12 +1,26 @@
 language: python
 python: 3.8
-install: pip install --upgrade pip
 jobs:
   include:
   - stage: test
-    script: "./buildScripts/run_tests.sh"
-
+    script: bash ./buildScripts/run_tests.sh
+  - stage: build-and-deploy
+    script: bash ./buildScripts/prepare_deploy.sh
+    before_deploy: 
+    - bash ./buildScripts/install_dependencies.sh
+    - bash ./buildScripts/prepare_aws_acc.sh
+    deploy:
+    - provider: script
+      script: bash ./buildScripts/deploy.sh
+      skip_cleanup: true 
 
 stages:
 - name: test
   if: type = pull_request
+- name: build-and-deploy
+  if: "(branch = development) AND type = push"
+
+env:
+  global:
+  - secure: V2RZTTf5N9KBF8cn4bOjQSJvsP5Q5g5kP9oKEz461W5As0iRcgJ7sB3qtMrSQUtp2CwgJWzPiGFDICKo0CgOKwAr6/qZbCjxTm9ODEM5k6DwEsAbIgUfHrsxTjD0B1ZCrHBrUWkPuS289s/96R53zfLSgsQ+zzMvzuUANvX7EqCmOMdsgq265zEimIqBlGW3AkrxcGUK/wp5mMW8ucrm/1c5d1hJmZpdoGzA5WI0+b6YHqjsGmaR0rJmKn7W3z/IfdbeNGhit5pgRjPQcwnFj71knLV08vBktdyhyiKrsa0mZLci2UEEOROjWAe+4lqt1CISTZPHxmJG/CLDfw7Q6ipedcfsP1zu31UfRfpPyb4OcYxUFiWE7iivbWjza2kYgMmJONaQxIzhC7rJIA6u+0+lVIo8dfjEv16aNtssb4mooWBOMshoKC7T0LfJweMjq4DwNmNJCdZtVV67Xhu1i9Sm+7PcoH14vKaxOTHC0qX2HMX/S0Pw4UgM6veRplIQ0OAKGytrtMu1XFjRIG4IcaR4bpaVhSTeiXzTmMTVBmxGNP7vP8mPS9RjTcMboUc00yrTPzn5IhY0KlpRPdamqpA4luP0SqM7o3nBcUqMgmgmtrSgeuR8rjgJYWX+Ve7lJjkmCTyZJGFzpposdq6S27s9gWfJ/BUFuni53xIaNbY=
+  - secure: iz5Y8n22fswRH0+b8pMgofM4s4O7m25C3xpw0Z+Ypy/idh+KfFjNSbBp3NW55LyuLI/VmgjGsp2WB0mVpWfSpq5NFdGSThsw1Rpa3hg27/ZcJiIZu/6vTIP4m16YDP9S3bw9yx2DlL0SoaqgynHClZse+2OnOhOClPrj7/tyZhv481F72jdSmU0x3QLQHdsGK2dFjTOTO/h1Ul3SRLEN8QGM0AVLhk/SGK8w1w/ivYfZexpKqIS+jKqijoQuXtxn61x1ZYdTC6kJgcUF+w2IedZRLyLIfEoSxT34oNeifEM0HnWWjraY7fdKoHqcdg0jrJac7rQB5Z2bt1iiQrjGHplbMeYiRHP5JU4CKouJPspxQfhKqQysH9wbwy/c1w5Ooe0g4mnyZ+A+yJsTZJyXdjqbSwMzehXhVwPBxANwGwdpEV95Cl/0IikakGUDDHvqc4c1BHbTgrYnPhBS6t0cfi3shPlyj2OburnFjssO85m9ZEN6QKjwEbGJ5QbMmr2QRjwn42AzYyn+vJfs7DlwCljwodKPy0njwZdtMM+aDj8/J86w36NMDbRGoUPObXFAoSVwX4GnZHdif44Js5vmaEjrMrsuvQNdwKPxaHW1UjI97XidXxatQAcnXfFzSiP3bk5iGeffTZseJ0VKo5zlQqrA77D03Zjgk2xlfDMkW4c=

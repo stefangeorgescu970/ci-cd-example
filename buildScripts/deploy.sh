@@ -6,4 +6,4 @@ echo "LOG - Importing required methods from helper files."
 
 echo "LOG - Finished importing."
 
-deployLambda src dev default ci-cd-example
+deployLambda src ci-cd-example-lambda-dev default eu-central-1

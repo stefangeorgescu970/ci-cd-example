@@ -13,6 +13,8 @@ jobs:
     - provider: script
       script: bash ./buildScripts/deploy.sh
       skip_cleanup: true 
+      on:
+        branch: development
 
 stages:
 - name: test

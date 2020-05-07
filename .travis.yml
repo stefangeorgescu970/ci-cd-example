@@ -28,7 +28,7 @@ jobs:
         all_branches: true
         condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"
   - stage: promote-release
-    before_deploy:
+    script:
     - bash ./buildScripts/install_dependencies.sh
     - bash ./buildScripts/prepare_aws_acc.sh
     deploy:

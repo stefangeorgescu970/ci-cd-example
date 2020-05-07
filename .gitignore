@@ -151,3 +151,4 @@ dmypy.json
 dependencies
 lambda.zip
 release
+deploy

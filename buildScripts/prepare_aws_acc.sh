@@ -7,6 +7,7 @@ set -e
 # AWS_KEY_ID - id of the access key
 # AWS_SECRET_KEY - secret key
 # AWS_STG_ACCOUNT_ID - account id of the staging account.
+# AWS_PROD_ACCOUNT_ID - account id of the production account.
 
 # If statement added in case of accidental execution on local environment.
 
@@ -27,5 +28,9 @@ if [ "$TRAVIS" == "true" ]; then
 
   echo "[profile stg]" >> ~/.aws/config
   echo "role_arn = arn:aws:iam::$AWS_STG_ACCOUNT_ID:role/StagingEnvironmentAdminRole" >> ~/.aws/config
+  echo "source_profile = default" >> ~/.aws/config
+
+  echo "[profile prod]" >> ~/.aws/config
+  echo "role_arn = arn:aws:iam::$AWS_PROD_ACCOUNT_ID:role/ProductionEnvironmentAdminRole" >> ~/.aws/config
   echo "source_profile = default" >> ~/.aws/config
 fi

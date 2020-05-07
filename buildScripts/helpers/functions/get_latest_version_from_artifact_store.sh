@@ -16,6 +16,6 @@ function getLatestVersionFromArtifactStore {
   if [ "$hotfix_release" = "false" ]; then
     echo `echo $versions | tr " " "\n" | grep -v "_" | head -n 1`
   else
-    echo `echo $VERSIONS | tr " " "\n" | grep "_" | head -n 1`
+    echo `echo $versions | tr " " "\n" | grep "_" | head -n 1`
   fi
 }

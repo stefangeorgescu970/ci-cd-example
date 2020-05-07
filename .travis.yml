@@ -31,7 +31,7 @@ stages:
 - name: test
   if: type = pull_request
 - name: build-and-deploy
-  if: "(branch = development) AND type = push"
+  if: "(branch = development OR branch =~ ^release\\/.*$) AND type = push"
 env:
   global:
   - secure: V2RZTTf5N9KBF8cn4bOjQSJvsP5Q5g5kP9oKEz461W5As0iRcgJ7sB3qtMrSQUtp2CwgJWzPiGFDICKo0CgOKwAr6/qZbCjxTm9ODEM5k6DwEsAbIgUfHrsxTjD0B1ZCrHBrUWkPuS289s/96R53zfLSgsQ+zzMvzuUANvX7EqCmOMdsgq265zEimIqBlGW3AkrxcGUK/wp5mMW8ucrm/1c5d1hJmZpdoGzA5WI0+b6YHqjsGmaR0rJmKn7W3z/IfdbeNGhit5pgRjPQcwnFj71knLV08vBktdyhyiKrsa0mZLci2UEEOROjWAe+4lqt1CISTZPHxmJG/CLDfw7Q6ipedcfsP1zu31UfRfpPyb4OcYxUFiWE7iivbWjza2kYgMmJONaQxIzhC7rJIA6u+0+lVIo8dfjEv16aNtssb4mooWBOMshoKC7T0LfJweMjq4DwNmNJCdZtVV67Xhu1i9Sm+7PcoH14vKaxOTHC0qX2HMX/S0Pw4UgM6veRplIQ0OAKGytrtMu1XFjRIG4IcaR4bpaVhSTeiXzTmMTVBmxGNP7vP8mPS9RjTcMboUc00yrTPzn5IhY0KlpRPdamqpA4luP0SqM7o3nBcUqMgmgmtrSgeuR8rjgJYWX+Ve7lJjkmCTyZJGFzpposdq6S27s9gWfJ/BUFuni53xIaNbY=

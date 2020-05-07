@@ -33,7 +33,7 @@ hotfix_in_progress=$(getPropertyFromFile ${deploy_property_file} "HOTFIX_IN_PROG
 
 if [ "$hotfix_in_progress" = "false" ]; then
   echo "LOG - Hotfix not in progress. Deploying normally."
-  deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1
+  deployLambda release "${lambda_full_name}" "${lambda_base_name}" "${aws_profile}" eu-central-1
 
   if [[ $TRAVIS_BRANCH =~ ^hotfix\/.*$ ]]; then
     echo "LOG - Hotfix branch detected. Updating deployment information to S3 artefact storage."
@@ -46,7 +46,7 @@ else
   echo "LOG - Hotfix in progress."
   if [[ $TRAVIS_BRANCH =~ (^hotfix\/.*$|^development$) ]]; then
     echo "LOG - Deploying since we are on development or on a hotfix branch, which are permitted."
-    deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1
+    deployLambda release "${lambda_full_name}" "${lambda_base_name}" "${aws_profile}" eu-central-1
   else
     echo "LOG - Skipping deployment since we are on a release branch during a hotfix."
   fi

@@ -4,23 +4,26 @@
 
 # $1 - environment in which the Lambda Should be Deployed
 
+set -e
+
 echo "LOG - Importing required methods from helper files."
 
 . ./buildScripts/helpers/functions/deploy_lambda.sh
+. ./buildScripts/helpers/constants.sh
 
 echo "LOG - Finished importing."
 
 deploy_env=$1
-lambda_full_name="ci-cd-example-lambda-${deploy_env}"
+lambda_full_name="${lambda_base_name}-${deploy_env}"
 
 if [ "${deploy_env}" == "dev" ]; then
   aws_profile="default"
 else
-  aws_profile="stg"
+  aws_profile=${staging_profile}
 fi
 
 echo "LOG - Preparing to deploy."
-aws s3 cp "${s3_address}/${deploy_property_file}" ${deploy_property_file} --quiet --profile stg
+aws s3 cp "${s3_address}/${deploy_property_file}" ${deploy_property_file} --quiet --profile ${staging_profile}
 
 echo "LOG - Received the following deployment information from artifact storage:"
 cat ${deploy_property_file}
@@ -28,13 +31,13 @@ cat ${deploy_property_file}
 hotfix_in_progress=$(getPropertyFromFile ${deploy_property_file} "HOTFIX_IN_PROGRESS")
 
 if [ "$hotfix_in_progress" = "false" ]; then
-  echo "LOG Hotfix not in progress. Deploying normally."
+  echo "LOG - Hotfix not in progress. Deploying normally."
   deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1
 
   if [[ $TRAVIS_BRANCH =~ ^hotfix\/.*$ ]]; then
     echo "LOG - Hotfix branch detected. Updating deployment information to S3 artefact storage."
     echo "HOTFIX_IN_PROGRESS=false" > $deploy_property_file
-    aws s3 cp ${deploy_property_file} "${s3_address}/${deploy_property_file}" --quiet --profile stg
+    aws s3 cp ${deploy_property_file} "${s3_address}/${deploy_property_file}" --quiet --profile ${staging_profile}
   else
     echo "LOG - Hotfix branch not detected. No further action required."
   fi

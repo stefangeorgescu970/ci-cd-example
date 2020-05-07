@@ -13,4 +13,12 @@ echo "LOG - Finished importing."
 deploy_env=$1
 lambda_full_name="ci-cd-example-lambda-${deploy_env}"
 
-deployLambda src "${lambda_full_name}" "${deploy_env}" eu-central-1
+if [ "${deploy_env}" == "dev" ]; then
+  aws_profile="default"
+else
+  aws_profile="stg"
+fi
+
+
+
+deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1

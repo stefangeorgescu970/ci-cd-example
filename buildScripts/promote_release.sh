@@ -34,9 +34,9 @@ mkdir -p release
 aws s3 cp "${s3_address}/${version_to_release}" release --recursive --quiet --profile ${staging_profile}
 
 if [ "$hotfix_release" = "false" ]; then
-  deployLambda release "${lambda_base_name}-prod" prod eu-central-1
+  deployLambda release "${lambda_base_name}-prod" "${lambda_base_name}" prod eu-central-1
 else
-  deployLambda release "${lambda_base_name}-prod" prod eu-central-1
+  deployLambda release "${lambda_base_name}-prod" "${lambda_base_name}" prod eu-central-1
 
   latest_version_for_release=$(getLatestVersionFromArtifactStore ${artifact_bucket} ${repository_key} "false")
 
@@ -45,7 +45,7 @@ else
   mkdir -p release
   aws s3 cp "${s3_address}/${latest_version_for_release}" release --recursive --quiet --profile ${staging_profile}
 
-  deployLambda release "${lambda_base_name}-stg" stg eu-central-1
+  deployLambda release "${lambda_base_name}-stg" "${lambda_base_name}" stg eu-central-1
   echo "HOTFIX_IN_PROGRESS=false" > $deploy_property_file
   aws s3 cp ${deploy_property_file} "${s3_address}/${deploy_property_file}" --quiet --profile ${staging_profile}
 fi

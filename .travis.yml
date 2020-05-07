@@ -20,13 +20,13 @@ jobs:
       skip_cleanup: true
       on:
         all_branches: true
-        condition: "$TRAVIS_BRANCH =~ (^release\\/.*$)"
+        condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"
     - provider: script
       script: bash ./buildScripts/deploy.sh stg
       skip_cleanup: true
       on:
         all_branches: true
-        condition: "$TRAVIS_BRANCH =~ (^release\\/.*$)"
+        condition: "$TRAVIS_BRANCH =~ (^release\\/.*$|^hotfix\\/.*$)"
   - stage: promote-release
     before_deploy:
     - bash ./buildScripts/install_dependencies.sh
@@ -51,7 +51,7 @@ stages:
 - name: test
   if: type = pull_request
 - name: build-and-deploy
-  if: "(branch = development OR branch =~ ^release\\/.*$) AND type = push"
+  if: "(branch = development OR branch =~ ^release\\/.*$ OR branch =~ ^hotfix\\/.*$) AND type = push"
 - name: promote-release
   if: branch = master AND type = push
 env:

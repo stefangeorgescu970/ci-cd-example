@@ -19,4 +19,31 @@ else
   aws_profile="stg"
 fi
 
-deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1
+echo "LOG - Preparing to deploy."
+aws s3 cp "${s3_address}/${deploy_property_file}" ${deploy_property_file} --quiet --profile stg
+
+echo "LOG - Received the following deployment information from artifact storage:"
+cat ${deploy_property_file}
+
+hotfix_in_progress=$(getPropertyFromFile ${deploy_property_file} "HOTFIX_IN_PROGRESS")
+
+if [ "$hotfix_in_progress" = "false" ]; then
+  echo "LOG Hotfix not in progress. Deploying normally."
+  deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1
+
+  if [[ $TRAVIS_BRANCH =~ ^hotfix\/.*$ ]]; then
+    echo "LOG - Hotfix branch detected. Updating deployment information to S3 artefact storage."
+    echo "HOTFIX_IN_PROGRESS=false" > $deploy_property_file
+    aws s3 cp ${deploy_property_file} "${s3_address}/${deploy_property_file}" --quiet --profile stg
+  else
+    echo "LOG - Hotfix branch not detected. No further action required."
+  fi
+else
+  echo "LOG - Hotfix in progress."
+  if [[ $TRAVIS_BRANCH =~ (^hotfix\/.*$|^development$) ]]; then
+    echo "LOG - Deploying since we are on development or on a hotfix branch, which are permitted."
+    deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1
+  else
+    echo "LOG - Skipping deployment since we are on a release branch during a hotfix."
+  fi
+fi

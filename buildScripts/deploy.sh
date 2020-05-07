@@ -37,7 +37,7 @@ if [ "$hotfix_in_progress" = "false" ]; then
 
   if [[ $TRAVIS_BRANCH =~ ^hotfix\/.*$ ]]; then
     echo "LOG - Hotfix branch detected. Updating deployment information to S3 artefact storage."
-    echo "HOTFIX_IN_PROGRESS=false" > $deploy_property_file
+    echo "HOTFIX_IN_PROGRESS=true" > $deploy_property_file
     aws s3 cp ${deploy_property_file} "${s3_address}/${deploy_property_file}" --quiet --profile ${staging_profile}
   else
     echo "LOG - Hotfix branch not detected. No further action required."

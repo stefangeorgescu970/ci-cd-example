@@ -10,6 +10,7 @@ echo "LOG - Importing required methods from helper files."
 
 . ./buildScripts/helpers/functions/deploy_lambda.sh
 . ./buildScripts/helpers/constants.sh
+. ./buildScripts/helpers/functions/get_property_from_file.sh
 
 echo "LOG - Finished importing."
 

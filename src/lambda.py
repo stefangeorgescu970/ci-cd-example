@@ -5,7 +5,7 @@ def handler(event, context):
   url = "http://api.quotable.io/random"
   response = requests.get(url)
   data = response.json()
-  print(data["content"])
+  return data["content"]
 
 
 if __name__ == "__main__":

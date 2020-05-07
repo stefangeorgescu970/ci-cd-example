@@ -19,6 +19,4 @@ else
   aws_profile="stg"
 fi
 
-
-
 deployLambda src "${lambda_full_name}" "${aws_profile}" eu-central-1

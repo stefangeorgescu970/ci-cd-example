@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Received parameters
 
 # $1 - File Path

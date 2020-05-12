@@ -45,7 +45,7 @@ jobs:
       file: release/*
       on:
         repo: stefangeorgescu970/ci-cd-example
-        tags: false
+        tags: false # Prevent a second build when tags are pushed to the repository.
         branch: master
 stages:
 - name: test

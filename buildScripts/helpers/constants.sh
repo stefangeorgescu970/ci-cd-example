@@ -1,3 +1,5 @@
+# Store some constants that will be used throughout the scripts.
+
 artifact_bucket="stefan-georgescu-deployment-artifacts"
 repository_key="ci-cd-example"
 deploy_property_file="deploy.properties"

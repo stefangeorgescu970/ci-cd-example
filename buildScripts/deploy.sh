@@ -2,7 +2,7 @@
 
 # Arguments received by script
 
-# $1 - environment in which the Lambda Should be Deployed
+# $1 - environment in which the Lambda Should be Deployed. Can be either dev or stg.
 
 set -e
 
@@ -14,16 +14,18 @@ echo "LOG - Importing required methods from helper files."
 
 echo "LOG - Finished importing."
 
+# Processing script variables.
 deploy_env=$1
 lambda_full_name="${lambda_base_name}-${deploy_env}"
 
+# Setting aws_profile to the required values to be later used with the aws-cli.
 if [ "${deploy_env}" == "dev" ]; then
   aws_profile="default"
 else
   aws_profile=${staging_profile}
 fi
 
-echo "LOG - Preparing to deploy."
+echo "LOG - Preparing to deploy. Fetching deployment information."
 aws s3 cp "${s3_address}/${deploy_property_file}" ${deploy_property_file} --quiet --profile ${staging_profile}
 
 echo "LOG - Received the following deployment information from artifact storage:"

@@ -1,4 +1,3 @@
-import os
 import requests
 
 def handler(event, context):

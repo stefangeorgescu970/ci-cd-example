@@ -9,11 +9,9 @@ echo "LOG - Importing required constants from helper files."
 echo "LOG - Finished importing."
 
 echo "LOG - Preparing Lambda for deployment."
-
 ./buildScripts/helpers/build.sh
 
 echo "LOG - Preparing release files."
-
 mkdir -p release
 cd src
 
@@ -22,5 +20,4 @@ if [ -d dependencies ]; then
 fi
 
 cp lambda.zip ../release/${lambda_base_name}.zip
-
 cd ..

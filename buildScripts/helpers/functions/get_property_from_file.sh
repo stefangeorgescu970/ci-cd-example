@@ -1,7 +1,9 @@
-# Received parameters
+# Method for processing a .properties file and retrieving values by key.
 
-# $1 - File Path
-# $2 - Property Key
+# Received parameters:
+
+# $1 - File Path;
+# $2 - Property Key.
 
 function getPropertyFromFile {
   set -e

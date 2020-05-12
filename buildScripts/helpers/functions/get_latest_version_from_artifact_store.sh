@@ -1,10 +1,12 @@
-# Received parameters
+# Method for parsing the subdirectories in the artifact store and retrieving the latest version.
 
-# $1 - Artifact Bucket
-# $2 - Repository key in Arifact Bucket
-# $3 - Wheter we are during a hotfix build.
-#           true - we are releasing a hotfix build
-#           false - we are releasing a normal build
+# Received parameters:
+
+# $1 - Artifact Bucket;
+# $2 - Repository key in Arifact Bucket;
+# $3 - Wheter we are during a hotfix build;
+#           true - we are releasing a hotfix build;
+#           false - we are releasing a normal build.
 
 
 function getLatestVersionFromArtifactStore {

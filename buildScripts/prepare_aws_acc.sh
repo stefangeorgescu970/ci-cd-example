@@ -16,7 +16,6 @@ echo "LOG - Importing required constants from helper files."
 echo "LOG - Finished importing."
 
 # If statement added in case of accidental execution on local environment.
-
 if [ "$TRAVIS" == "true" ]; then
   echo "LOG - Configuring AWS accounts."
 

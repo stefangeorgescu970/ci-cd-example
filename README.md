@@ -2,7 +2,7 @@
 # CI/CD Example Repository
 This repository contains example code for implementing a CI/CD pipeline for deploying code in multiple AWS environments (accounts). The supporting infrastructure is defined using Terraform and can be found in [this repository](https://github.com/stefangeorgescu970/aws-infrastructure).
 
-All the code presented here has been implemented as support for a Medium article with the title [**CI/CD Pipeline for AWS with Travis**](https://medium.com/@stefan.georgescu.970/ci-cd-pipeline-for-aws-with-travis). In order to fully understand the design and implementaton, it is recommended that the article is reviewed.
+All the code presented here has been implemented as support for a Medium article with the title [**CI/CD Pipeline for AWS with Travis**](https://medium.com/@stefan.georgescu.970/ci-cd-pipeline-for-aws-with-travis-19c9448be17d). In order to fully understand the design and implementaton, it is recommended that the article is reviewed.
 
 # Repository Structure
 At the root level of the repository you can find the `.travis.yml` file containing the configuration for [Travis CI](https://docs.travis-ci.com).
